@@ -1,6 +1,6 @@
 ![imagen](https://github.com/Flori-87/data-analysis-pipeline/blob/master/input/image.PNG)
 
-   # Analysis of world happiness data using pipelines
+# Analysis of world happiness data using pipelines
 
 
 #### Project goal
