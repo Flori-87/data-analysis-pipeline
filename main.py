@@ -1,11 +1,6 @@
 from argparse import ArgumentParser
-import os 
-import sys
-module_path = os.path.abspath(os.path.join('funciones.py'))
-if module_path not in sys.path:
-    sys.path.append(module_path)
-from analisis2 import *
-
+import pandas as pd
+from src.analysis import *
 
 parser = ArgumentParser(description="This program analyzes the World Happiness database")
 
