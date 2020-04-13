@@ -56,21 +56,16 @@ def getValueMin(country):
 
 # cuando se introduce uno o dos argumentos
 def analisis(region,income):
-    if income == None:
-        data_analisis = data[data["Region"]==region]
-    elif region == None:
-        data_analisis = data[data["Income"]==income]
-    else:
-        lista_income = ["HIC","LIC","UMC","LMC"]
-        if income in lista_income:
-            data_region = data[data["Region"]==region] 
-            incomes_region = list(data_region["Income"].value_counts().index)
-            if income in incomes_region:
-                data_analisis = data_region[data_region["Income"]==income]
-            else:
-                return "Sorry. There are not countries with that income in that region"
+    if checkParams(region,income)!=None:
+        return checkParams(region,income)
+    if checkParams(region,income)==None:
+        if income == None:
+            data_analisis = data[data["Region"]==region]
+        elif region == None:
+            data_analisis = data[data["Income"]==income]
         else:
-            return "Sorry. The value of income must be: HIC, LIC, UMC, LMC"
+            data_region = data[data["Region"]==region] 
+            data_analisis = data_region[data_region["Income"]==income]
     data_group = data_analisis.groupby(["Region","Income"]).agg({"Rank":["min","max"],"Country":"count","Score":["min","max"],
                                                       "Economy":"max","Family":"max",
                                                       "Health":"max","Freedom":"max",
@@ -78,3 +73,18 @@ def analisis(region,income):
                                                        "Precip./month (mm)":"max","Temp. (ºC)":"max"})
 
     return data_group.sort_values(("Rank","min"))
+
+def checkParams(region,income):
+    if region!=None:
+        regions_list = list(data["Region"].value_counts().index)
+        if region not in regions_list:
+            return "Sorry.The value of region must be: Sub-Saharan Africa, Central and Eastern Europe, Latin America and Caribbean, Western Europe, Middle East and Northern Africa, Southeastern Asia, Southern Asia, Eastern Asia, North America, Australia and New Zealand."
+        elif income!=None:
+            data_region = data[data["Region"]==region]
+            income_list = list(data_region["Income"].value_counts().index)
+            if income not in income_list:    
+                return f"Sorry. There are not countries with that income in that region. Possible incomes are: {income_list}"
+    elif region==None and income:
+        total_income = ["HIC","LIC","UMC","LMC"]
+        if income not in total_income:
+            return f"Sorry. The value of income must be: {total_income}"
