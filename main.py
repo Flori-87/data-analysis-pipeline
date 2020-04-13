@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 import pandas as pd
 from src.analysis import *
+from generatePDF import genPDF
 
 def programHappiness(region,income):
     if args.region==None and args.income==None:
@@ -20,3 +21,4 @@ print(args)
 
 if __name__ == "__main__":
     programHappiness(args.region,args.income)
+    genPDF(args.region,args.income)
