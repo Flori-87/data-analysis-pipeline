@@ -5,7 +5,7 @@ data = pd.read_csv("output/dataset_clean.csv")
 data = data.drop(columns="Unnamed: 0")
 data_rank = data.set_index("Rank")
 
-# Cuando no se introduce ningún argumento
+# When no parameters are received
 def getSummary():
     lista_regiones= list(data_rank["Region"].value_counts().index)
     total = pd.DataFrame(columns = ["Rank","Region","Country","Score","Main contribution","Lower contribution", "Temp. (ºC)", "Precip./month (mm)"])
@@ -54,7 +54,7 @@ def getValueMin(country):
     #return col
 
 
-# cuando se introduce uno o dos argumentos
+# When parameters are received
 def analisis(region,income):
     if checkParams(region,income)!=None:
         return checkParams(region,income)
